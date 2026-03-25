@@ -2,7 +2,7 @@ module:
   id: aws/s3/bucket
   name: s3-bucket
   system: aws
-  version: 1.0.0
+  version: 1.0.1
   description: "AWS S3 bucket with versioning, KMS encryption, public access block, lifecycle rules, and optional CORS configuration"
   categories:
     - storage
@@ -10,7 +10,6 @@ module:
   authors:
     - name: "Lace Team"
       email: "team@lace.cloud"
-  registry_visibility: public
   example: |
     module "uploads_bucket" {
       source = "git::https://github.com/lace-cloud/registry-tf.git//modules/aws/s3/bucket?ref=v1.0.0"

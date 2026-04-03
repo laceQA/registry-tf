@@ -126,7 +126,7 @@ jobs:
     name: Register
     runs-on: ubuntu-latest
     needs: prepare
-    if: needs.prepare.outputs.modules_found == 'true'
+    if: always() && needs.prepare.result == 'success' && needs.prepare.outputs.modules_found == 'true'
 
     strategy:
       matrix:
@@ -162,29 +162,22 @@ jobs:
       - name: Register module
         env:
           LACE_REGISTRY_KEY: ${{ secrets.LACE_REGISTRY_KEY }}
-          LACE_ORGANIZATION: ${{ vars.LACE_ORGANIZATION }}
         run: |
-          ORG_FLAG=""
-          [ -n "$LACE_ORGANIZATION" ] && ORG_FLAG="--organization $LACE_ORGANIZATION"
           lace terraform-registry register \
             --module-path "${{ matrix.module_path }}" \
             --commit-sha "${{ github.sha }}" \
             --ref "${{ github.ref }}" \
-            --actor "${{ github.actor }}" \
-            $ORG_FLAG
+            --actor "${{ github.actor }}"
 
       - name: Verify registration
         env:
           LACE_REGISTRY_KEY: ${{ secrets.LACE_REGISTRY_KEY }}
-          LACE_ORGANIZATION: ${{ vars.LACE_ORGANIZATION }}
         run: |
           MODULE="${{ matrix.module_path }}"
           NAME=$(grep "^  name:" "$MODULE/module.yaml" | head -1 | sed 's/^[^:]*: *//' | tr -d '"')
           SYSTEM=$(grep "^  system:" "$MODULE/module.yaml" | head -1 | sed 's/^[^:]*: *//' | tr -d '"')
           echo "Verifying: $SYSTEM/$NAME"
-          ORG_FLAG=""
-          [ -n "$LACE_ORGANIZATION" ] && ORG_FLAG="--organization $LACE_ORGANIZATION"
-          lace terraform-registry get "$NAME" "$SYSTEM" $ORG_FLAG
+          lace terraform-registry get "$NAME" "$SYSTEM"
 
   summary:
     name: Summary

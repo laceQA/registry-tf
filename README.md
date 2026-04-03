@@ -144,11 +144,9 @@ Enterprise teams can fork this repository to run a private Terraform module regi
 
 1. **Fork** this repo into your GitHub organization.
 
-2. **Set repository variables** (Settings → Secrets and variables → Actions → Variables):
+2. **Make the repository private** (Settings → General → Danger Zone → Change repository visibility → Make private). This ensures your modules are not publicly accessible.
 
-   | Variable | Value |
-   |----------|-------|
-   | `LACE_ORGANIZATION` | Your Lace org slug (e.g., `acme-corp`) |
+   > **Note:** GitHub currently does not allow changing the visibility of a forked repository directly. If you cannot change the visibility, create a new private repository and push the contents of the fork to it instead. A fix for this limitation is being tracked separately.
 
 3. **Set repository secret** (Settings → Secrets and variables → Actions → Secrets):
 
@@ -156,9 +154,27 @@ Enterprise teams can fork this repository to run a private Terraform module regi
    |--------|-------|
    | `LACE_REGISTRY_KEY` | Org-scoped API key (create via `lace api-key create --organization <slug>` or in the portal at Organization Settings → Registry Keys) |
 
-4. **Configure branch protection** on `develop` and `main` with the same required status check names (`Summary`, `Gate / Source Branch`).
+4. **Enable GitHub Actions workflows** — forked repositories have workflows disabled by default. Go to the **Actions** tab in your repository and click **"I understand my workflows, go ahead and enable them"** to activate the CI/CD pipelines.
 
-5. **Organization registries are private.** Only org members can view and download private modules.
+5. **Configure branches:**
+
+   Create the `develop` branch if it doesn't exist:
+   ```bash
+   git checkout -b develop
+   git push -u origin develop
+   ```
+
+   Then configure branch protection rules (Settings → Branches → Add branch protection rule) for both `develop` and `main`:
+
+   - **Branch name pattern:** `develop` (repeat for `main`)
+   - Enable **Require a pull request before merging**
+   - Enable **Require status checks to pass before merging** and add the required checks:
+     - For `develop`: `Summary`
+     - For `main`: `Summary`, `Gate / Source Branch`
+   - Enable **Require branches to be up to date before merging**
+   - Optionally enable **Include administrators** to enforce rules for all users
+
+   Set the **default branch** to `develop` (Settings → General → Default branch) so that new PRs target `develop` by default.
 
 6. **Customize the `authorize` job** (optional) — the Authorize job in `publish.yml` checks membership in `@<org>/platform-team` using a GitHub App. If you don't use the Lace GitHub App, either:
    - Remove the `authorize` job and the `needs: authorize` line from the `prepare` job
@@ -166,13 +182,13 @@ Enterprise teams can fork this repository to run a private Terraform module regi
 
 ### How it works
 
-When variables are unset (the default for the public `lace-cloud/registry-tf`), workflows behave exactly as before: modules are published to the public registry. When `LACE_ORGANIZATION` is set, the CLI passes `--organization <slug>` to registry commands, scoping all operations to that org's private registry. Organization registries are private — only org members can list and download modules.
+When you push module changes to `main` (via the `develop` → `main` PR flow), the publish workflow automatically registers modules in the Lace registry using the `LACE_REGISTRY_KEY` secret. The API key determines which organization the modules are scoped to — no additional organization flag is needed.
 
 ## Troubleshooting
 
-### `organization is required for private modules`
+### `authentication failed` or `unauthorized`
 
-Ensure `LACE_ORGANIZATION` is set in repository variables and that `LACE_REGISTRY_KEY` is set in repository secrets.
+Ensure `LACE_REGISTRY_KEY` is set in repository secrets and that the API key is valid and has not expired.
 
 ### `terraform validate` fails with provider errors
 

@@ -1,0 +1,6 @@
+module:
+  id: azure/storage-account
+  name: storage-account
+  system: azure
+  version: 1.0.2
+  description: "Azure storage account module with resource group"

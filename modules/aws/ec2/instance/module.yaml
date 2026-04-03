@@ -1,0 +1,21 @@
+module:
+  id: aws/ec2/instance
+  name: instance
+  system: aws
+  version: 1.0.0
+  description: "Provision an EC2 instance"
+
+  categories:
+    - compute
+
+  authors:
+    - name: "RajiGali"
+      email: "raji@qxf2.com"
+
+  example: |
+    module "ec2" {
+      source = "git::https://github.com/laceQA/registry-tf.git//modules/aws/ec2/instance?ref=main"  
+      ami           = "ami-123456"
+      instance_type = "t2.micro"
+      name          = "demo-instance"
+    }

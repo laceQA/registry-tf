@@ -1,6 +1,24 @@
 module:
   id: aws/sagemaker/endpoint
-  name: endpoint
+  name: sagemaker-endpoint
   system: aws
-  version: 1.0.0
-  description: "SageMaker endpoint for ML inference using pretrained HuggingFace model"
+  version: 1.0.7
+  description: "Deploy a SageMaker endpoint for ML inference using HuggingFace model"
+
+  categories:
+    - machine-learning
+    - inference
+
+  authors:
+    - name: "Sravani"
+      email: "testlaceapp@gmail.com"
+
+  example: |
+    module "sagemaker_endpoint" {
+      source  = "lace://testlaceapp/aws/sagemaker_endpoint"
+      version = "1.0.7"
+
+      endpoint_name = "test-endpoint"
+      model_name    = "test-model"
+      instance_type = "ml.t2.medium"
+    }

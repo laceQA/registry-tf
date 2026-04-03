@@ -33,12 +33,12 @@ resource "aws_sagemaker_model" "this" {
 }
 
 resource "aws_sagemaker_endpoint_configuration" "this" {
-  name = "${var.model_name}-config"
+  name = "config"
 
   production_variants {
     variant_name           = "AllTraffic"
     model_name             = aws_sagemaker_model.this.name
-    instance_type          = "ml.t2.medium"
+    instance_type          = var.instance_type
     initial_instance_count = 1
   }
 }

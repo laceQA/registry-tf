@@ -1,3 +1,4 @@
+
 variable "model_name" {
   description = "Name of the SageMaker model"
   type        = string
@@ -18,4 +19,10 @@ variable "image" {
   description = "HuggingFace inference container image"
   type        = string
   default     = "763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:latest"
+}
+
+variable "instance_type" {
+  description = "SageMaker instance type"
+  type        = string
+  default     = "ml.t2.medium"
 }

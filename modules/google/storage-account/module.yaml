@@ -1,0 +1,6 @@
+module:
+  id: google/storage-bucket
+  name: storage-bucket
+  system: google
+  version: 1.0.0
+  description: "Google Cloud storage bucket module"

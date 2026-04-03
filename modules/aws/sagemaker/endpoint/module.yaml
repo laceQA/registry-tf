@@ -1,0 +1,6 @@
+module:
+  id: aws/sagemaker/endpoint
+  name: endpoint
+  system: aws
+  version: 1.0.0
+  description: "SageMaker endpoint for ML inference using pretrained HuggingFace model"

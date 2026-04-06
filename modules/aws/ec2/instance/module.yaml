@@ -2,7 +2,7 @@ module:
   id: aws/ec2/instance
   name: instance
   system: aws
-  version: 1.0.0
+  version: 1.0.1
   description: "Provision an EC2 instance"
 
   categories:

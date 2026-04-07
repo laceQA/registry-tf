@@ -2,7 +2,7 @@ module:
   id: aws/sagemaker/endpoint
   name: sagemaker-endpoint
   system: aws
-  version: 1.0.7
+  version: 1.0.8
   description: "Deploy a SageMaker endpoint for ML inference using HuggingFace model"
 
   categories:

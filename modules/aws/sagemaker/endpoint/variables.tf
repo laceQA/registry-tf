@@ -1,4 +1,3 @@
-
 variable "model_name" {
   description = "Name of the SageMaker model"
   type        = string
@@ -6,6 +5,11 @@ variable "model_name" {
 
 variable "endpoint_name" {
   description = "Name of the SageMaker endpoint"
+  type        = string
+}
+
+variable "execution_role_arn" {
+  description = "IAM role ARN for SageMaker"
   type        = string
 }
 

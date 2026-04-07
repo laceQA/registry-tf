@@ -1,26 +1,6 @@
-resource "aws_iam_role" "sagemaker_role" {
-  name = "sagemaker-execution-role-testlace"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Effect = "Allow",
-      Principal = {
-        Service = "sagemaker.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
-    }]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "policy" {
-  role       = aws_iam_role.sagemaker_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonSageMakerFullAccess"
-}
-
 resource "aws_sagemaker_model" "this" {
   name               = var.model_name
-  execution_role_arn = aws_iam_role.sagemaker_role.arn
+  execution_role_arn = var.execution_role_arn
 
   primary_container {
     image = var.image

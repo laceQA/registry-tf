@@ -10,7 +10,6 @@ module:
   authors:
     - name: "Lace Team"
       email: "team@lace.cloud"
-  registry_visibility: public
   example: |
     module "vpc" {
       source = "git::https://github.com/lace-cloud/registry-tf.git//modules/aws/vpc?ref=v1.0.0"

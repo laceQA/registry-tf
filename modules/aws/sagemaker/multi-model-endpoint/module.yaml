@@ -1,0 +1,47 @@
+module:
+  id: aws/sagemaker/multi-model-endpoint
+  name: sagemaker-multi-model-endpoint
+  system: aws
+  version: 1.0.0
+  description: "Deploy a SageMaker multi-model endpoint for dynamic model loading from S3"
+
+  categories:
+    - machine-learning
+    - inference
+
+  authors:
+    - name: "Sravani"
+      email: "testlaceapp@gmail.com"
+
+  inputs:
+    - name: endpoint_name
+      type: string
+      description: "Name of the SageMaker endpoint"
+      required: true
+
+    - name: execution_role_arn
+      type: string
+      description: "IAM role ARN for SageMaker"
+      required: true
+
+    - name: s3_model_path
+      type: string
+      description: "S3 path containing multiple model artifacts (.tar.gz)"
+      required: true
+
+    - name: instance_type
+      type: string
+      description: "Instance type for endpoint"
+      required: false
+      default: "ml.t2.medium"
+
+  example: |
+    module "sagemaker_mme" {
+      source  = "lace://testlaceapp/aws/sagemaker_multi_model_endpoint"
+      version = "1.0.0"
+
+      endpoint_name       = "mme-endpoint"
+      execution_role_arn = "arn:aws:iam::xxxx:role/sagemaker-role"
+      s3_model_path      = "s3://bucket/models/"
+      instance_type      = "ml.t2.medium"
+    }

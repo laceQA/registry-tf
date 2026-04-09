@@ -2,7 +2,7 @@ module:
   id: aws/sagemaker/multi-model-endpoint
   name: sagemaker-multi-model-endpoint
   system: aws
-  version: 1.0.0
+  version: 1.0.1
   description: "Deploy a SageMaker multi-model endpoint for dynamic model loading from S3"
 
   categories:

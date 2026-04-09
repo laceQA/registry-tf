@@ -1,5 +1,6 @@
 variable "endpoint_name" {
-  type = string
+  type    = string
+  default = "mme-endpoint"
 }
 
 variable "execution_role_arn" {
@@ -9,6 +10,7 @@ variable "execution_role_arn" {
 variable "s3_model_path" {
   description = "S3 path where multiple models are stored"
   type        = string
+  default     = "s3://mme-endpoint-test-bucket/models/"
 }
 
 variable "image" {

@@ -20,13 +20,19 @@ variable "model_id" {
 }
 
 variable "image" {
-  description = "HuggingFace inference container image"
+  description = "Container image for inference"
   type        = string
-  default     = "763104351884.dkr.ecr.us-east-1.amazonaws.com/huggingface-pytorch-inference:latest"
+  default     = "763104351884.dkr.ecr.us-east-1.amazonaws.com/pytorch-inference:1.13-cpu-py39"
 }
 
 variable "instance_type" {
-  description = "SageMaker instance type"
+  description = "Instance type for endpoint"
   type        = string
   default     = "ml.t2.medium"
+}
+
+variable "endpoint_config_name" {
+  description = "Optional custom endpoint config name"
+  type        = string
+  default     = null
 }

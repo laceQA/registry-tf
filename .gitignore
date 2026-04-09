@@ -43,3 +43,8 @@ terraform.rc
 
 .lace/
 .terraform/
+
+model1/
+model2/
+models/
+*.tar.gz

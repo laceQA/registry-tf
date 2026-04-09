@@ -13,7 +13,7 @@ resource "aws_sagemaker_model" "this" {
 }
 
 resource "aws_sagemaker_endpoint_configuration" "this" {
-  name = "config"
+  name = var.endpoint_config_name != null ? var.endpoint_config_name : "${var.endpoint_name}-config"
 
   production_variants {
     variant_name           = "AllTraffic"

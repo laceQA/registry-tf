@@ -7,7 +7,7 @@ resource "aws_sagemaker_model" "this" {
 
     mode = "MultiModel"
 
-    model_data_url = var.s3_model_path
+    model_data_url = "s3://mme-endpoint-test-bucket/models/model1.tar.gz"
   }
 }
 

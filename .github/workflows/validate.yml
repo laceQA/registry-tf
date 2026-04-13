@@ -147,6 +147,14 @@ jobs:
       - name: Version bump check
         run: |
           MODULE="${{ matrix.module_path }}"
+
+          # If no .tf files changed in this module, skip — metadata-only edits don't need a version bump
+          TF_CHANGES=$(git diff --name-only "origin/${{ github.event.pull_request.base.ref }}"...HEAD -- "$MODULE"/*.tf "$MODULE"/**/*.tf 2>/dev/null || true)
+          if [ -z "$TF_CHANGES" ]; then
+            echo "Metadata-only change — skipping version bump check"
+            exit 0
+          fi
+
           CURRENT=$(grep "^  version:" "$MODULE/module.yaml" | head -1 | sed 's/^[^:]*: *//' | tr -d '"')
           [ -z "$CURRENT" ] && { echo "::error::No 'version' field in module.yaml"; exit 1; }
 

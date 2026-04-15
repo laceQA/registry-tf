@@ -11,7 +11,6 @@ module:
   authors:
     - name: "Lace Team"
       email: "team@lace.cloud"
-  registry_visibility: public
   example: |
     module "ecr" {
       source               = "git::https://github.com/lace-cloud/registry-tf.git//modules/aws/ecr/repository?ref=v1.0.0"

@@ -1,0 +1,24 @@
+module:
+  id: aws/ecs/ecs-microservice
+  name: ecs-microservice
+  system: aws
+  version: 1.0.0
+  description: "ECS Fargate microservice with ALB, VPC, ECR, IAM and CloudWatch"
+
+  categories:
+    - compute
+    - containers
+    - networking
+
+  authors:
+    - name: "Raji Gali"
+      email: "raji@qxf2.com"
+
+  example: |
+    module "microservice" {
+      source = "git::https://github.com/laceQA/registry-tf.git//modules/aws/ecs/microservice?ref=<sha>"
+
+      service_name  = "test-service"
+      desired_count = 1
+      region        = "us-west-1"
+    }
